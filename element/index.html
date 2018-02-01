@@ -1,0 +1,74 @@
+<template id="ui-flashcard-template-view">
+
+  <style>
+
+		:host([hidden]) { display: none }
+
+		:host {
+			--ui-flashcard-background-color: #FFF;
+		}
+
+		.ui-flashcard-container {
+			background-color:var(--ui-flashcard-background-color);
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+			transition: 0.3s;
+			border-radius:5px;
+			padding:10px;
+			/* SHOULD BE A DYNAMIC VARIABLE */
+			height:calc(200px + 3em);
+			/* SHOULD BE A DYNAMIC VARIABLE */
+			width:200px;
+			text-align:center;
+			cursor:pointer;
+			border-radius:10px;
+		}
+
+		.ui-flashcard-container:hover {
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		}
+
+		.ui-flashcard-content {
+			border-radius:5px;
+			width:100%;
+			height:100%;
+			overflow: hidden;
+		}
+
+		.ui-flashcard-image {
+			height:100%;
+			margin-left: 50%;
+			transform: translateX(-50%);
+		}
+
+		.ui-flashcard-name {
+			padding:0px;
+			margin:0px;
+			text-align:center;
+			/* SHOULD BE A DYNAMIC VARIABLE */
+			margin-top:calc(100px - 0.5em);
+			vertical-align: middle;
+		}
+
+	</style>
+
+	<div id="container" class="ui-flashcard-container">
+
+		<div id="front" class="ui-flashcard-content">
+			<h1 id="frontName" class="ui-flashcard-name" hidden></h1>
+			<p id="frontDescription" class="ui-flashcard-description" hidden></p>
+			<img id="frontImage" class="ui-flashcard-image" hidden></img>
+		</div>
+
+		<div id="back">
+			<h1 id="backName" class="ui-flashcard-name" hidden></h1>
+			<p id="backDescription" class="ui-flashcard-description" hidden></p>
+			<img id="backImage" class="ui-flashcard-image" hidden ></img>
+		</div>
+
+
+	</div>
+
+</template>
+
+<script type="text/javascript" src="ui-flashcard-data-controller.js"> </script>
+<script type="text/javascript" src="ui-flashcard-view-controller.js"> </script>

@@ -1,0 +1,35 @@
+{
+  "name": "ui-flashcard",
+  "version": "0.0.1",
+  "description": "A flashcard user interface",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/webpack/bin/webpack.js",
+    "test": "./node_modules/http-server/bin/http-server",
+    "start": "npm run-script build; npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoseBarrios/ui-flashcard.git"
+  },
+  "keywords": [
+    "custom",
+    "element",
+    "class"
+  ],
+  "browser": "browser.js",
+  "author": "JoseBarrios",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/JoseBarrios/ui-flashcard/issues"
+  },
+  "homepage": "https://github.com/JoseBarrios/ui-flashcard#readme",
+  "devDependencies": {
+    "http-server": "^0.10.0",
+    "mocha": "^3.4.2",
+    "webpack": "^3.3.0"
+  },
+  "dependencies": {
+    "dc-flashcard": "0.0.1"
+  }
+}
