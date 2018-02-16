@@ -26,6 +26,10 @@ class FlashcardViewController extends HTMLElement {
 		this.shadowRoot = this.attachShadow({mode: 'open'});
 		this.shadowRoot.appendChild(view);
 		this.dataController = new FlashcardDataController();
+
+		//Initial state
+		this.flippable = true;
+		this.face = "up";
 	}
 
 	connectedCallback() {
@@ -54,6 +58,10 @@ class FlashcardViewController extends HTMLElement {
 		this.state.connected = true;
 		this._updateView(this.view);
 		this._updateState();
+
+		//Initial state
+		this.view.back.hidden = true;
+
 	}
 
 	adoptedCallback(){
@@ -110,7 +118,6 @@ class FlashcardViewController extends HTMLElement {
 		this.state.hidden = value === "true";
 		this._updateState(this.state.hidden);
 	}
-
 
 	get front(){ return this.state.front; }
 	set front(value){
@@ -174,6 +181,10 @@ class FlashcardViewController extends HTMLElement {
 		const isURL = FlashcardDataController.isURL(this.front);
 		const isString = FlashcardDataController.isString(this.front);
 		const isLong = this.front && this.front.length? this.front.length > 20 : false;
+
+		if(this.face === "down"){
+			return;
+		}
 
 		if(isURL){
 			this.view.frontImage.src = this.front;
@@ -248,7 +259,7 @@ class FlashcardViewController extends HTMLElement {
 
 		function transitionState(){
 			card.style.zIndex = "9000";
-			card.state.face = card.state.face === "up"? "down" : "up";
+			card.face = card.face === "up"? "down" : "up";
 			card._updateState(card.state.face);
 			window.requestAnimationFrame(endFlip);
 		}
@@ -276,11 +287,12 @@ class FlashcardViewController extends HTMLElement {
 
 		//FACE
 		const updateFaceState = () => {
-			if(this.state.face === "down"){
+			console.log("UPDATE FACE STATE")
+			if(this.face === "down"){
 				this.view.front.hidden = true;
 				this.view.back.hidden = false;
 			}
-			else if(this.state.face === "up") {
+			else if(this.face === "up") {
 				this.view.front.hidden = false;
 				this.view.back.hidden = true;
 			}
@@ -298,12 +310,15 @@ class FlashcardViewController extends HTMLElement {
 		}
 
 		switch(state){
+
 			case this.state.face:
 				updateFaceState();
 				break;
+
 			case this.state.hidden:
 				updateHiddenState();
 				break;
+
 			default:
 				updateFaceState();
 				updateHiddenState();
