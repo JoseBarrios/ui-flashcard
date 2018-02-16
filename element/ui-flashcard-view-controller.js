@@ -6,7 +6,7 @@ const uiFlashcardTemplate = uiFlashcardDoc.ownerDocument.querySelector('#ui-flas
 class FlashcardViewController extends HTMLElement {
 
 	static get observedAttributes(){
-		return ["front", "back", "value", "face", "hidden"];
+		return ["front", "back", "value", "face", "hidden", "flippable"];
 	}
 
 	constructor(model){
@@ -83,7 +83,9 @@ class FlashcardViewController extends HTMLElement {
 				if(newVal !== this.hidden){ this.hidden = newVal; }
 				break;
 
-
+			case 'flippable':
+				if(newVal !== this.flippable){ this.flippable = newVal; }
+				break;
 
 			default:
 				console.warn(`Attribute ${attrName} is not handled, you should probably do that`);
@@ -138,6 +140,15 @@ class FlashcardViewController extends HTMLElement {
 		}
 		this.state.face = value;
 		this._updateState(this.state.face);
+	}
+
+	get flippable(){ return this.state.flippable; }
+	set flippable(value){
+		if(this.getAttribute('flippable') !== value){
+			this.setAttribute('flippable', value);
+			return;
+		}
+		this.state.flippable = value === "true";
 	}
 
 
@@ -213,13 +224,13 @@ class FlashcardViewController extends HTMLElement {
 	}
 
 	_onClick(e){
-		this.flip();
-		this.dispatchEvent(new CustomEvent('custom-click', {detail: this.model}));
+		e.stopPropagation();
+		if(this.state.flippable){ this.flip(); }
+		this.dispatchEvent(new CustomEvent('click', {detail: this.model}));
 	}
 
 	flip(){
-
-		if(this.state.flipping) return;
+		if(this.state.flipping || this.state.flippable === false) return;
 		else this.state.flipping = true;
 
 		let card = this;

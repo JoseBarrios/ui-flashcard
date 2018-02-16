@@ -11,9 +11,12 @@
 
 
 <body style="background-color:lightGray;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;align-content:space-around;">
-	<ui-flashcard hidden></ui-flashcard>
-	<ui-flashcard></ui-flashcard>
-<!-- <ui-flashcard value='{"name":"name", "description":"Very long description about this item goes here", "image":"https://goo.gl/JNcW7m"}' front="image" back="name" face="up"></ui-flashcard>-->
+	<!--<ui-flashcard hidden></ui-flashcard>-->
+	<!--<ui-flashcard></ui-flashcard>-->
+
+	<ui-flashcard value='{"name":"name", "description":"Very long description about this item goes here", "image":"https://cdn.filestackcontent.com/PZsvG5E6RfSTd1nmHonm"}' front="image" back="name" face="up" flippable="true"></ui-flashcard>
+	<ui-flashcard value='{"name":"name", "description":"Very long description about this item goes here", "image":"https://cdn.filestackcontent.com/PZsvG5E6RfSTd1nmHonm"}' front="name" back="image" face="up" flippable="false"></ui-flashcard>
+
 	<!--<ui-flashcard value='{"name":"name", "description":"Very long description about this item goes here", "image":"https://goo.gl/JNcW7m"}' front="image" back="name" face="up"></ui-flashcard>-->
 	<!--<ui-flashcard value='{"name":"name", "description":"Very long description about this item goes here", "image":"https://goo.gl/JNcW7m"}' front="name" back="description" face="down"></ui-flashcard>-->
 	<!--<ui-flashcard value='{"name":"name", "description":"Very long description about this item goes here", "image":"https://goo.gl/JNcW7m"}' front="name" back="description" face="down"></ui-flashcard>-->
@@ -33,6 +36,10 @@
   	// imports are loaded and elements have been registered
 		let deck = document.querySelectorAll("ui-flashcard");
 		deck.forEach(card => {
+
+			card.addEventListener("click", e => {
+				console.log(e);
+			});
 
 			var randomTime = Math.random(0,1) * 10000;
 			//var randomTime = 3000;
