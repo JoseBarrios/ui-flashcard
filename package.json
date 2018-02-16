@@ -1,6 +1,6 @@
 {
   "name": "ui-flashcard",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A flashcard user interface",
   "main": "index.js",
   "scripts": {
