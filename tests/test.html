@@ -33,14 +33,13 @@
   	// imports are loaded and elements have been registered
 		let deck = document.querySelectorAll("ui-flashcard");
 		deck.forEach(card => {
+
 			var randomTime = Math.random(0,1) * 10000;
 			//var randomTime = 3000;
-			console.log(randomTime);
 			setInterval(() => {
 				card.flip();
 				randomTime = Math.random(0,1) * 10000;
 			}, randomTime)
 		})
-		console.log(e)
 	});
 </script>

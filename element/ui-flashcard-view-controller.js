@@ -6,7 +6,7 @@ const uiFlashcardTemplate = uiFlashcardDoc.ownerDocument.querySelector('#ui-flas
 class FlashcardViewController extends HTMLElement {
 
 	static get observedAttributes(){
-		return ["front", "back", "value", "face"];
+		return ["front", "back", "value", "face", "hidden"];
 	}
 
 	constructor(model){
@@ -79,6 +79,11 @@ class FlashcardViewController extends HTMLElement {
 				if(newVal !== this.face){ this.face = newVal; }
 				break;
 
+			case 'hidden':
+				if(newVal !== this.hidden){ this.hidden = newVal; }
+				break;
+
+
 
 			default:
 				console.warn(`Attribute ${attrName} is not handled, you should probably do that`);
@@ -100,8 +105,8 @@ class FlashcardViewController extends HTMLElement {
 			this.setAttribute('hidden', value);
 			return;
 		}
-		this.state.hidden = this.model[value];
-		this.view.container.hidden = this.state.hidden;
+		this.state.hidden = value === "true";
+		this._updateState(this.state.hidden);
 	}
 
 
@@ -132,7 +137,7 @@ class FlashcardViewController extends HTMLElement {
 			return;
 		}
 		this.state.face = value;
-		this._updateState();
+		this._updateState(this.state.face);
 	}
 
 
@@ -233,7 +238,7 @@ class FlashcardViewController extends HTMLElement {
 		function transitionState(){
 			card.style.zIndex = "9000";
 			card.state.face = card.state.face === "up"? "down" : "up";
-			card._updateState();
+			card._updateState(card.state.face);
 			window.requestAnimationFrame(endFlip);
 		}
 
@@ -254,20 +259,43 @@ class FlashcardViewController extends HTMLElement {
 	}
 
 
-	_updateState(){
+	_updateState(state){
 
 		if(!this.state || !this.state.connected){ return; }
 
-		switch(this.face){
-			case "down":
+		//FACE
+		const updateFaceState = () => {
+			if(this.state.face === "down"){
 				this.view.front.hidden = true;
 				this.view.back.hidden = false;
-				break;
-
-			case "up":
+			}
+			else if(this.state.face === "up") {
 				this.view.front.hidden = false;
 				this.view.back.hidden = true;
+			}
+		}
+
+		//HIDDEN
+		const updateHiddenState = () => {
+			if(this.state.hidden){
+				this.view.container.hidden = this.state.hidden;
+			}
+			else {
+				this.removeAttribute("hidden");
+				this.view.container.hidden = this.state.hidden;
+			}
+		}
+
+		switch(state){
+			case this.state.face:
+				updateFaceState();
 				break;
+			case this.state.hidden:
+				updateHiddenState();
+				break;
+			default:
+				updateFaceState();
+				updateHiddenState();
 		}
 	}
 
