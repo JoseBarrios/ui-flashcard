@@ -94,6 +94,17 @@ class FlashcardViewController extends HTMLElement {
 		this._updateView(this.view);
 	}
 
+	get hidden(){ return this.state.hidden; }
+	set hidden(value){
+		if(this.getAttribute('hidden') !== value){
+			this.setAttribute('hidden', value);
+			return;
+		}
+		this.state.hidden = this.model[value];
+		this.view.container.hidden = this.state.hidden;
+	}
+
+
 	get front(){ return this.state.front; }
 	set front(value){
 		if(this.getAttribute('front') !== value){
