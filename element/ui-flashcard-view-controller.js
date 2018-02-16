@@ -146,7 +146,7 @@ class FlashcardViewController extends HTMLElement {
 	_updateFrontView(){
 		const isURL = FlashcardDataController.isURL(this.front);
 		const isString = FlashcardDataController.isString(this.front);
-		const isLong = this.front.length > 20;
+		const isLong = this.front && this.front.length? this.front.length > 20 : false;
 
 		if(isURL){
 			this.view.frontImage.src = this.front;
@@ -172,7 +172,7 @@ class FlashcardViewController extends HTMLElement {
 	_updateBackView(){
 		const isURL = FlashcardDataController.isURL(this.back);
 		const isString = FlashcardDataController.isString(this.back);
-		const isLong = this.back.length > 20;
+		const isLong = this.back && this.back.length? this.back.length > 20 : false;
 
 		if(isURL){
 			this.view.backImage.src = this.back;
@@ -203,15 +203,17 @@ class FlashcardViewController extends HTMLElement {
 
 	flip(){
 
+		if(this.state.flipping) return;
+		else this.state.flipping = true;
 
 		let card = this;
 		card.view.container.removeEventListener('click', this.event.click);
 		card.style.zIndex = "9000";
 
 		function startFlip(){
-			card.state.translateX -= 3;
-			card.state.scale += 0.011;
-			card.state.rotateY += 5;
+			//card.state.translateX -= 3;
+			//card.state.scale += 0.015;
+			card.state.rotateY += 10;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			if(card.state.rotateY % 90 === 0){ transitionState(); }
 			else { window.requestAnimationFrame(startFlip); }
@@ -225,14 +227,15 @@ class FlashcardViewController extends HTMLElement {
 		}
 
 		function endFlip(){
-			card.state.translateX += 3;
-			card.state.scale -= 0.011;
-			card.state.rotateY += 5;
+			//card.state.translateX += 3;
+			//card.state.scale -= 0.015;
+			card.state.rotateY += 10;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			if(card.state.rotateY % 180 !== 0){ window.requestAnimationFrame(endFlip); }
 			else {
 				card.view.container.addEventListener('click', card.event.click);
 				card.style.zIndex = "0";
+				card.state.flipping = false;
 			}
 		}
 
