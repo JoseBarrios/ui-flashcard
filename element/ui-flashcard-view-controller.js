@@ -65,7 +65,6 @@ class FlashcardViewController extends HTMLElement {
 	}
 
 	adoptedCallback(){
-		console.log('adoptedCallback');
 	}
 
 	attributeChangedCallback(attrName, oldVal, newVal) {
@@ -96,7 +95,7 @@ class FlashcardViewController extends HTMLElement {
 				break;
 
 			default:
-				console.warn(`Attribute ${attrName} is not handled, you should probably do that`);
+				console.warn(`ui-flashcard attribute ${attrName} is not handled, you should probably do that`);
 		}
 	}
 
@@ -287,7 +286,6 @@ class FlashcardViewController extends HTMLElement {
 
 		//FACE
 		const updateFaceState = () => {
-			console.log("UPDATE FACE STATE")
 			if(this.face === "down"){
 				this.view.front.hidden = true;
 				this.view.back.hidden = false;
