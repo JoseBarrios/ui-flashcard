@@ -250,7 +250,7 @@ class FlashcardViewController extends HTMLElement {
 		function startFlip(){
 			//card.state.translateX -= 3;
 			//card.state.scale += 0.015;
-			card.state.rotateY += 10;
+			card.state.rotateY += 30;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			if(card.state.rotateY % 90 === 0){ transitionState(); }
 			else { window.requestAnimationFrame(startFlip); }
