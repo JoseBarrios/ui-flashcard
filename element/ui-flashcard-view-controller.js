@@ -248,9 +248,9 @@ class FlashcardViewController extends HTMLElement {
 		card.style.zIndex = "9000";
 
 		function startFlip(){
-			//card.state.translateX -= 3;
-			//card.state.scale += 0.015;
-			card.state.rotateY += 30;
+			card.state.translateX -= 3;
+			card.state.scale += 0.015;
+			card.state.rotateY += 15;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			if(card.state.rotateY % 90 === 0){ transitionState(); }
 			else { window.requestAnimationFrame(startFlip); }
@@ -264,9 +264,9 @@ class FlashcardViewController extends HTMLElement {
 		}
 
 		function endFlip(){
-			//card.state.translateX += 3;
-			//card.state.scale -= 0.015;
-			card.state.rotateY += 10;
+			card.state.translateX += 3;
+			card.state.scale -= 0.015;
+			card.state.rotateY += 15;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			if(card.state.rotateY % 180 !== 0){ window.requestAnimationFrame(endFlip); }
 			else {
