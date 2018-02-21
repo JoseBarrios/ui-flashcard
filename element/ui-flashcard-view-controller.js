@@ -169,20 +169,14 @@ class FlashcardViewController extends HTMLElement {
 			case "description":
 				this.view.frontDescription.innerHTML = this.model["description"];
 				this.view.frontImage.hidden = true;
-				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = false;
-				//this.view.frontDescription.style.height = "100%";
 				this.view.frontName.hidden = true;
-				//this.view.frontName.style.height = "0px";
 				break;
 			case "name":
 				this.view.frontName.innerHTML = this.model["name"];
 				this.view.frontImage.hidden = true;
-				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = true;
-				//this.view.frontDescription.style.height = "0px";
 				this.view.frontName.hidden = false;
-				//this.view.frontName.style.height = "100%";
 				break;
 			default:
 				console.error("Front of card has a property that is not yet handled:", this.front);
@@ -203,22 +197,14 @@ class FlashcardViewController extends HTMLElement {
 			case "description":
 				this.view.backDescription.innerHTML = this.model["description"];
 				this.view.backImage.hidden = true;
-				//For some reason, flex displays still take space when hidden
 				this.view.backDescription.hidden = false;
-				this.view.backDescription.style.height = "100%";
-				//For some reason, flex displays still take space when hidden
 				this.view.backName.hidden = true;
-				this.view.backName.style.height = "0px";
 				break;
 			case "name":
 				this.view.backName.innerHTML = this.model["name"];
 				this.view.backImage.hidden = true;
-				//For some reason, flex displays still take space when hidden
 				this.view.backDescription.hidden = true;
-				this.view.backDescription.style.height = "0px";
-				//For some reason, flex displays still take space when hidden
 				this.view.backName.hidden = false;
-				this.view.backName.style.height = "100%";
 				break;
 			default:
 				console.error("Back of card has a property that is not yet handled:", this.back);
