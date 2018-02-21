@@ -7,8 +7,12 @@
 		:host {
 			--ui-flashcard-background-color: #FFF;
 			display:flex;
-			width:222px;
-			height:284px;
+
+			--ui-flashcard-width: 222px;
+			width:var(--ui-flashcard-width);
+
+			--ui-flashcard-height: 284px;
+			height:var(--ui-flashcard-height);
 		}
 
 		.ui-flashcard-container {
@@ -33,7 +37,7 @@
 		.ui-flashcard-content {
 			border-radius:5px;
 			overflow: hidden;
-			height:100%;
+			height:calc(var(--ui-flashcard-height) - 44px);
 		}
 
 		.ui-flashcard-image {
