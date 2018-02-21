@@ -118,27 +118,25 @@ class FlashcardViewController extends HTMLElement {
 		this._updateState(this.state.hidden);
 	}
 
-	get front(){ return this.state.front; }
+	get front(){ return this.getAttribute("front"); }
 	set front(value){
 		if(this.getAttribute('front') !== value){
 			this.setAttribute('front', value);
 			return;
 		}
-		this.state.front = this.model[value];
 		this._updateView(this.view.front);
 	}
 
-	get back(){ return this.state.back; }
+	get back(){ return this.getAttribute("back"); }
 	set back(value){
 		if(this.getAttribute('back') !== value){
 			this.setAttribute('back', value);
 			return;
 		}
-		this.state.back = this.model[value];
 		this._updateView(this.view.back);
 	}
 
-	get face(){ return this.state.face; }
+	get face(){ return this.getAttribute("face"); }
 	set face(value){
 		if(this.getAttribute('face') !== value){
 			this.setAttribute('face', value);
@@ -177,57 +175,59 @@ class FlashcardViewController extends HTMLElement {
 	}
 
 	_updateFrontView(){
-		const isURL = FlashcardDataController.isURL(this.front);
-		const isString = FlashcardDataController.isString(this.front);
-		const isLong = this.front && this.front.length? this.front.length > 20 : false;
 
-		if(this.face === "down"){
-			return;
-		}
+		if(this.face === "down"){ return; }
 
-		if(isURL){
-			this.view.frontImage.src = this.front;
-			this.view.frontImage.hidden = false;
-			this.view.frontDescription.hidden = true;
-			this.view.frontName.hidden = true;
-		}
-		else if(isString && isLong) {
-			this.view.frontDescription.innerHTML = this.front;
-			this.view.frontImage.hidden = true;
-			this.view.frontDescription.hidden = false;
-			this.view.frontName.hidden = true;
-		}
-		else if(isString) {
-			this.view.frontName.innerHTML = this.front;
-			this.view.frontImage.hidden = true;
-			this.view.frontDescription.hidden = true;
-			this.view.frontName.hidden = false;
+		switch(this.front){
+			case "image":
+				this.view.frontImage.src = this.model["image"];
+				this.view.frontImage.hidden = false;
+				this.view.frontDescription.hidden = true;
+				this.view.frontName.hidden = true;
+				break;
+			case "description":
+				this.view.frontDescription.innerHTML = this.model["description"];
+				this.view.frontImage.hidden = true;
+				this.view.frontDescription.hidden = false;
+				this.view.frontName.hidden = true;
+				break;
+			case "name":
+				this.view.frontName.innerHTML = this.model["name"];
+				this.view.frontImage.hidden = true;
+				this.view.frontDescription.hidden = true;
+				this.view.frontName.hidden = false;
+				break;
+			default:
+				console.error("Front of card has a property that is not yet handled:", this.front);
 		}
 
 	}
 
 	_updateBackView(){
-		const isURL = FlashcardDataController.isURL(this.back);
-		const isString = FlashcardDataController.isString(this.back);
-		const isLong = this.back && this.back.length? this.back.length > 20 : false;
 
-		if(isURL){
-			this.view.backImage.src = this.back;
-			this.view.backImage.hidden = false;
-			this.view.backDescription.hidden = true;
-			this.view.backName.hidden = true;
-		}
-		else if(isString && isLong) {
-			this.view.backDescription.innerHTML = this.back;
-			this.view.backImage.hidden = true;
-			this.view.backDescription.hidden = false;
-			this.view.backName.hidden = true;
-		}
-		else if(isString) {
-			this.view.backName.innerHTML = this.back;
-			this.view.backImage.hidden = true;
-			this.view.backDescription.hidden = true;
-			this.view.backName.hidden = false;
+		if(this.face === "up"){ return; }
+
+		switch(this.back){
+			case "image":
+				this.view.backImage.src = this.model["image"];
+				this.view.backImage.hidden = false;
+				this.view.backDescription.hidden = true;
+				this.view.backName.hidden = true;
+				break;
+			case "description":
+				this.view.backDescription.innerHTML = this.model["description"];
+				this.view.backImage.hidden = true;
+				this.view.backDescription.hidden = false;
+				this.view.backName.hidden = true;
+				break;
+			case "name":
+				this.view.backName.innerHTML = this.model["name"];
+				this.view.backImage.hidden = true;
+				this.view.backDescription.hidden = true;
+				this.view.backName.hidden = false;
+				break;
+			default:
+				console.error("Back of card has a property that is not yet handled:", this.back);
 		}
 
 
@@ -235,12 +235,12 @@ class FlashcardViewController extends HTMLElement {
 
 	_onClick(e){
 		e.stopPropagation();
-		if(this.state.flippable){ this.flip(); }
+		if(this.flippable){ this.flip(); }
 		this.dispatchEvent(new CustomEvent('click', {detail: this.model}));
 	}
 
 	flip(){
-		if(this.state.flipping || this.state.flippable === false) return;
+		if(this.state.flipping || this.flippable === false) return;
 		else this.state.flipping = true;
 
 		let card = this;
@@ -289,10 +289,12 @@ class FlashcardViewController extends HTMLElement {
 			if(this.face === "down"){
 				this.view.front.hidden = true;
 				this.view.back.hidden = false;
+				this._updateBackView();
 			}
 			else if(this.face === "up") {
 				this.view.front.hidden = false;
 				this.view.back.hidden = true;
+				this._updateFrontView();
 			}
 		}
 
