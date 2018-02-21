@@ -171,18 +171,18 @@ class FlashcardViewController extends HTMLElement {
 				this.view.frontImage.hidden = true;
 				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = false;
-				this.view.frontDescription.style.height = "100%";
+				//this.view.frontDescription.style.height = "100%";
 				this.view.frontName.hidden = true;
-				this.view.frontName.style.height = "0px";
+				//this.view.frontName.style.height = "0px";
 				break;
 			case "name":
 				this.view.frontName.innerHTML = this.model["name"];
 				this.view.frontImage.hidden = true;
 				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = true;
-				this.view.frontDescription.style.height = "0px";
+				//this.view.frontDescription.style.height = "0px";
 				this.view.frontName.hidden = false;
-				this.view.frontName.style.height = "100%";
+				//this.view.frontName.style.height = "100%";
 				break;
 			default:
 				console.error("Front of card has a property that is not yet handled:", this.front);
