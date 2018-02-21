@@ -152,6 +152,13 @@ class FlashcardViewController extends HTMLElement {
 	_updateView() {
 		//No point in rendering if there isn't a model source, or a view on screen
 		if(!this.model || !this.state || !this.state.connected){ return; }
+
+		//If we're dealing with an image, load ASAP
+		if(this.front === "image" || this.back === "image" ){
+			this.view.backImage.src = this.model.image;
+			this.view.frontImage.src = this.model.image;
+		}
+
 		this.face === "up"?  this._updateFrontView() : this._updateBackView();
 	}
 
@@ -163,26 +170,33 @@ class FlashcardViewController extends HTMLElement {
 			case "image":
 				this.view.frontImage.src = this.model["image"];
 				this.view.frontImage.hidden = false;
+				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = true;
+				this.view.frontDescription.style.height = "0px";
+				//For some reason, flex displays still take space when hidden
 				this.view.frontName.hidden = true;
+				this.view.frontName.style.height = "0px";
 				break;
 			case "description":
 				this.view.frontDescription.innerHTML = this.model["description"];
-				this.view.frontImage.hidden = true;
-				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = false;
-				//this.view.frontDescription.style.height = "var(--ui-flashcard-content-height)";
+				//For some reason, flex displays still take space when hidden
+				this.view.frontImage.hidden = true;
+				this.view.frontImage.style.height = "0px";
+				//For some reason, flex displays still take space when hidden
 				this.view.frontName.hidden = true;
 				this.view.frontName.style.height = "0px";
 				break;
 			case "name":
 				this.view.frontName.innerHTML = this.model["name"];
+				this.view.frontName.hidden = false;
+				//For some reason, flex displays still take space when hidden
 				this.view.frontImage.hidden = true;
+				this.view.frontImage.style.height = "0px";
 				//For some reason, flex displays still take space when hidden
 				this.view.frontDescription.hidden = true;
 				this.view.frontDescription.style.height = "0px";
-				this.view.frontName.hidden = false;
-				//this.view.frontName.style.height = "var(--ui-flashcard-content-height)";
+
 				break;
 			default:
 				console.error("Front of card has a property that is not yet handled:", this.front);
@@ -197,28 +211,32 @@ class FlashcardViewController extends HTMLElement {
 			case "image":
 				this.view.backImage.src = this.model["image"];
 				this.view.backImage.hidden = false;
+				//For some reason, flex displays still take space when hidden
 				this.view.backDescription.hidden = true;
+				this.view.backDescription.style.height = "0px";
+				//For some reason, flex displays still take space when hidden
 				this.view.backName.hidden = true;
+				this.view.backName.style.height = "0px";
 				break;
 			case "description":
 				this.view.backDescription.innerHTML = this.model["description"];
-				this.view.backImage.hidden = true;
-				//For some reason, flex displays still take space when hidden
 				this.view.backDescription.hidden = false;
-				//this.view.backDescription.style.height = "var(--ui-flashcard-content-height)";
+				//For some reason, flex displays still take space when hidden
+				this.view.backImage.hidden = true;
+				this.view.backImage.style.height = "0px";
 				//For some reason, flex displays still take space when hidden
 				this.view.backName.hidden = true;
 				this.view.backName.style.height = "0px";
 				break;
 			case "name":
 				this.view.backName.innerHTML = this.model["name"];
+				this.view.backName.hidden = false;
+				//For some reason, flex displays still take space when hidden
 				this.view.backImage.hidden = true;
+				this.view.backImage.style.height = "0px";
 				//For some reason, flex displays still take space when hidden
 				this.view.backDescription.hidden = true;
 				this.view.backDescription.style.height = "0px";
-				//For some reason, flex displays still take space when hidden
-				this.view.backName.hidden = false;
-				//this.view.backName.style.height = "var(--ui-flashcard-content-height)";
 				break;
 			default:
 				console.error("Back of card has a property that is not yet handled:", this.back);
