@@ -7,7 +7,8 @@
 		:host {
 			--ui-flashcard-background-color: #FFF;
 			display:flex;
-			width:220px;
+			width:222px;
+			height:284px;
 		}
 
 		.ui-flashcard-container {
@@ -16,14 +17,13 @@
 			transition: 0.3s;
 			border-radius:5px;
 			padding:20px;
-			/* SHOULD BE A DYNAMIC VARIABLE */
-			height:calc(200px + 3em);
-			/* SHOULD BE A DYNAMIC VARIABLE */
-			width:220px;
 			text-align:center;
 			cursor:pointer;
 			border-radius:10px;
 			display:inline-block;
+
+			width:calc(100% - 44px);
+			height:calc(100% - 44px);
 		}
 
 		.ui-flashcard-container:hover {
@@ -32,8 +32,6 @@
 
 		.ui-flashcard-content {
 			border-radius:5px;
-			width:100%;
-			height:100%;
 			overflow: hidden;
 		}
 
