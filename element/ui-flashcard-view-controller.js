@@ -156,7 +156,6 @@ class FlashcardViewController extends HTMLElement {
 	}
 
 	_updateFrontView(){
-		console.log("UPDATE FRONT", this.view)
 		this.view.front.hidden = false;
 		this.view.back.hidden = true;
 
@@ -191,7 +190,6 @@ class FlashcardViewController extends HTMLElement {
 	}
 
 	_updateBackView(){
-		console.log("UPDATE BACK", this.view)
 		this.view.front.hidden = true;
 		this.view.back.hidden = false;
 
