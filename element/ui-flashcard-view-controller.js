@@ -115,7 +115,6 @@ class FlashcardViewController extends HTMLElement {
 	set front(value){
 		if(this.getAttribute('front') !== value){
 			this.setAttribute('front', value);
-			return;
 		}
 		this._updateView();
 	}
@@ -124,7 +123,6 @@ class FlashcardViewController extends HTMLElement {
 	set back(value){
 		if(this.getAttribute('back') !== value){
 			this.setAttribute('back', value);
-			return;
 		}
 		this._updateView();
 	}
@@ -162,42 +160,45 @@ class FlashcardViewController extends HTMLElement {
 		this.face === "up"?  this._updateFrontView() : this._updateBackView();
 	}
 
+	displayImage(bool){
+		this.view.frontImage.src = this.model["image"];
+		this.view.frontImage.hidden = bool;
+	}
+
+	displayName(bool){
+		this.view.frontName.innerHTML = this.model["name"];
+		this.view.frontName.hidden = bool;
+	}
+
+	displayDescription(bool){
+		this.view.frontDescription.innerHTML = this.model["description"];
+		this.view.frontDescription.hidden = bool;
+	}
+
+
 	_updateFrontView(){
 		this.view.front.hidden = false;
 		this.view.back.hidden = true;
 
 		switch(this.front){
-			case "image":
-				this.view.frontImage.src = this.model["image"];
-				this.view.frontImage.hidden = false;
-				//For some reason, flex displays still take space when hidden
-				this.view.frontDescription.hidden = true;
-				this.view.frontDescription.style.height = "0px";
-				//For some reason, flex displays still take space when hidden
-				this.view.frontName.hidden = true;
-				this.view.frontName.style.height = "0px";
-				break;
 			case "description":
-				this.view.frontDescription.innerHTML = this.model["description"];
-				this.view.frontDescription.hidden = false;
-				//For some reason, flex displays still take space when hidden
-				this.view.frontImage.hidden = true;
-				this.view.frontImage.style.height = "0px";
-				//For some reason, flex displays still take space when hidden
-				this.view.frontName.hidden = true;
-				this.view.frontName.style.height = "0px";
+				this.displayDescription(true);
+				this.displayName(false);
+				this.displayImage(false);
 				break;
-			case "name":
-				this.view.frontName.innerHTML = this.model["name"];
-				this.view.frontName.hidden = false;
-				//For some reason, flex displays still take space when hidden
-				this.view.frontImage.hidden = true;
-				this.view.frontImage.style.height = "0px";
-				//For some reason, flex displays still take space when hidden
-				this.view.frontDescription.hidden = true;
-				this.view.frontDescription.style.height = "0px";
 
+			case "name":
+				this.displayDescription(false);
+				this.displayName(true);
+				this.displayImage(false);
 				break;
+
+			case "image":
+				this.displayDescription(false);
+				this.displayName(false);
+				this.displayImage(true);
+				break;
+
 			default:
 				console.error("Front of card has a property that is not yet handled:", this.front);
 		}
@@ -258,10 +259,11 @@ class FlashcardViewController extends HTMLElement {
 		card.style.zIndex = "9000";
 
 		function startFlip(){
-			card.state.translateX -= 3;
+			//card.state.translateX -= 3;
 			card.state.scale += 0.015;
 			card.state.rotateY += 15;
-			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
+			//card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
+			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale})`;
 			if(card.state.rotateY % 90 === 0){ transitionState(); }
 			else { window.requestAnimationFrame(startFlip); }
 		}
@@ -274,10 +276,11 @@ class FlashcardViewController extends HTMLElement {
 		}
 
 		function endFlip(){
-			card.state.translateX += 3;
+			//card.state.translateX += 3;
 			card.state.scale -= 0.015;
 			card.state.rotateY += 15;
-			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
+			//card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
+			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale})`;
 			if(card.state.rotateY % 180 !== 0){ window.requestAnimationFrame(endFlip); }
 			else {
 				card.view.container.addEventListener('click', card.event.click);
