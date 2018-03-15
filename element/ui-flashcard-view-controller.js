@@ -14,7 +14,6 @@ class FlashcardViewController extends HTMLElement {
 		this.state = {};
 		this.state.connected = false;
 		this.state.scale = 1;
-		this.state.translateX = 0;
 		this.state.rotateY = 0;
 		//Keeps reference of events with bindings (so we can remove them)
 		//see: https://stackoverflow.com/questions/11565471/removing-event-listener-which-was-added-with-bind
@@ -259,10 +258,8 @@ class FlashcardViewController extends HTMLElement {
 		card.style.zIndex = "9000";
 
 		function startFlip(){
-			//card.state.translateX -= 3;
 			card.state.scale += 0.015;
 			card.state.rotateY += 15;
-			//card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale})`;
 			if(card.state.rotateY % 90 === 0){ transitionState(); }
 			else { window.requestAnimationFrame(startFlip); }
@@ -276,10 +273,8 @@ class FlashcardViewController extends HTMLElement {
 		}
 
 		function endFlip(){
-			//card.state.translateX += 3;
 			card.state.scale -= 0.015;
 			card.state.rotateY += 15;
-			//card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale}) translateX(${card.state.translateX}px)`;
 			card.style.transform = `rotateY(${card.state.rotateY}deg) scale(${card.state.scale})`;
 			if(card.state.rotateY % 180 !== 0){ window.requestAnimationFrame(endFlip); }
 			else {
